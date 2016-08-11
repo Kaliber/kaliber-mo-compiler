@@ -1,0 +1,14 @@
+# OS temp files
+.DS_Store
+.env
+
+node_modules
+coverage
+dist
+sketch
+
+*.log
+*.log.*
+
+config/local*.*
+
