@@ -1,0 +1,16 @@
+{
+  "name": "kaliber-mo-compiler",
+  "version": "0.0.2",
+  "description": "Compile PO files to MO files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Jan Brünemann",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@git.kaliber.io:kaliber/mo-compiler.git"
+  }
+}
