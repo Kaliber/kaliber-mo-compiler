@@ -1,23 +1,24 @@
 {
-  "name": "kaliber-mo-compiler",
-  "version": "0.1.0",
+  "name": "@kaliber/mo-compiler",
+  "version": "0.0.0",
   "description": "Compile PO files to MO files.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "Jan Brünemann",
-  "license": "ISC",
+  "license": "MIT",
+  "bin": {
+    "compile-po": "./index.js"
+  },
   "repository": {
     "type": "git",
-    "url": "git@github.com:Kaliber/kaliber-mo-compiler.git"
+    "url": "git@github.com:kaliberjs/mo-compiler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kaliberjs/mo-compiler/issues"
   },
   "dependencies": {
-    "colors": "~1.1.2",
-    "fs": "~0.0.2",
-    "gettext-parser": "~1.2.0",
-    "path": "~0.12.7",
-    "process": "~0.11.8"
+    "colors": "~1.3.3",
+    "gettext-parser": "~4.0.1"
   }
 }

@@ -1,50 +1,65 @@
-var gettextParser = require( 'gettext-parser' );
-var fs = require( 'fs' );
-var path = require( 'path' );
-var proc = require( 'process' );
-var colors = require( 'colors' );
+#!/usr/bin/env node
 
+const gettextParser = require("gettext-parser");
+const fs = require("fs");
+const path = require("path");
+const colors = require("colors");
 
-console.log( colors.dim('Compile MO files from PO files...') );
+console.log(colors.dim("Compile MO files from PO files..."));
 
-var targetDir = path.resolve(proc.argv.slice(2).join('')) + '/';
+const targetDir = path.resolve(process.argv.slice(2)[0]);
+compilePoFiles(targetDir);
 
-fs.readdir( targetDir, function( err, files ) {
-  if( err ) {
-    console.error( "Could not list the directory.", err );
-    proc.exit( 1 );
-  }
+function compilePoFiles(dir) {
+  fs.readdir(dir, function(err, files) {
+    if (err) {
+      console.error("Could not list the directory.", err);
+      process.exit(1);
+    }
 
-  files.forEach( function( file, index ) {
-    var fromPath = path.join( targetDir, file );
+    files.forEach(filename => {
+      compilePoFile(path.join(dir, filename));
+    });
+  });
+}
 
-    fs.stat( fromPath, function( error, stat ) {
-      if( error ) {
-        console.error( "Error stating file.", error );
+function compilePoFile(sourcePath) {
+  fs.stat(sourcePath, function(error, stat) {
+    if (error) {
+      console.error("Error stating file.", error);
+      return;
+    }
+
+    if (!stat.isFile()) return;
+
+    const { dir, ext, name, base } = path.parse(sourcePath);
+    
+    if (ext !== ".po") return;
+
+    const targetFilename = name + ".mo";
+
+    fs.readFile(sourcePath, (error, input) => {
+      if (error) {
+        console.error("Error reading file.", error);
         return;
       }
 
-      if( stat.isFile() ) {
-        var f = path.parse(file);
+      const po = gettextParser.po.parse(input);
+      const output = gettextParser.mo.compile(po);
 
-        if (f.ext == '.po') {
-          var target = f.name+'.mo';
-
-          console.log( colors.yellow('[' + targetDir +  '] ') + colors.cyan(f.base) + colors.dim(' => ') + colors.green(target) );
-
-          var input = require('fs').readFileSync(targetDir + f.base);
-          var po = gettextParser.po.parse(input);
-          var output = gettextParser.mo.compile(po);
-          require('fs').writeFileSync(targetDir + target, output);
-
+      fs.writeFile(path.join(dir, targetFilename), output, error => {
+        if (error) {
+          console.error("Error writing file.", error);
+          return;
         }
 
-
-      }
-
-    } );
-  } );
-} );
-
-
-
+        console.log(
+          colors.yellow("[" + dir + "] ") +
+            colors.cyan(base) +
+            colors.dim(" => ") +
+            colors.green(targetFilename)
+        );
+      });
+    });
+  });
+}
