@@ -1,18 +1,18 @@
-var gettextParser = require( 'gettext-parser' );
-var fs = require( 'fs' );
-var path = require( 'path' );
-var proc = require( 'process' );
-var colors = require( 'colors' );
+#!/usr/bin/env node
 
+var gettextParser = require("gettext-parser");
+var fs = require("fs");
+var path = require("path");
+var colors = require("colors");
 
 console.log( colors.dim('Compile MO files from PO files...') );
 
-var targetDir = path.resolve(proc.argv.slice(2).join('')) + '/';
+var targetDir = path.resolve(process.argv.slice(2).join('')) + '/';
 
 fs.readdir( targetDir, function( err, files ) {
   if( err ) {
     console.error( "Could not list the directory.", err );
-    proc.exit( 1 );
+    process.exit( 1 );
   }
 
   files.forEach( function( file, index ) {
@@ -32,10 +32,10 @@ fs.readdir( targetDir, function( err, files ) {
 
           console.log( colors.yellow('[' + targetDir +  '] ') + colors.cyan(f.base) + colors.dim(' => ') + colors.green(target) );
 
-          var input = require('fs').readFileSync(targetDir + f.base);
+          var input = fs.readFileSync(targetDir + f.base);
           var po = gettextParser.po.parse(input);
           var output = gettextParser.mo.compile(po);
-          require('fs').writeFileSync(targetDir + target, output);
+          fs.writeFileSync(targetDir + target, output);
 
         }
 

@@ -11,13 +11,10 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git@github.com:Kaliber/kaliber-mo-compiler.git"
+    "url": "git@github.com:kaliberjs/kaliber-mo-compiler.git"
   },
   "dependencies": {
-    "colors": "~1.1.2",
-    "fs": "~0.0.2",
-    "gettext-parser": "~1.2.0",
-    "path": "~0.12.7",
-    "process": "~0.11.8"
+    "colors": "~1.3.3",
+    "gettext-parser": "~4.0.1"
   }
 }
