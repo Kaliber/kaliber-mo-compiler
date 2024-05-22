@@ -3,6 +3,7 @@
   "version": "0.0.2",
   "description": "Compile PO files to MO files.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,7 +19,7 @@
     "url": "https://github.com/kaliberjs/mo-compiler/issues"
   },
   "dependencies": {
-    "colors": "~1.3.3",
-    "gettext-parser": "~4.0.1"
+    "colors": "~1.4.0",
+    "gettext-parser": "~8.0.0"
   }
 }
